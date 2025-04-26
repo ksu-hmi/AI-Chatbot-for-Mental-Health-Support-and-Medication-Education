@@ -7,7 +7,7 @@ def home(request):
 def get_response(request):
     user_input = request.GET.get('message')
 
-    bot_response = "I'm here to listen. Could you tell me more about how you're feeling?"
+    bot_response = "I'm here to listen. Could you tell me more about how you're feeling."
 
     if user_input:
         message = user_input.lower()
@@ -28,5 +28,9 @@ def get_response(request):
             bot_response = "Medication should always be taken as prescribed. Would you like to learn about common side effects?"
         elif "coping" in message or "self-care" in message:
             bot_response = "Coping strategies include journaling, exercise, and connecting with supportive people."
+        elif "yes" in message:
+            bot_response = "I'm glad you're interested. I recommend reaching out to a therapist or checking trusted websites like NAMI.org or Mayo Clinic for more resources."
+        elif "sad" in message or "feeling down" in message:
+            bot_response = "I'm sorry you're feeling sad. It might help to talk to someone you trust or engage in activities you usually enjoy. Would you like more coping tips?"
 
     return HttpResponse(bot_response)
