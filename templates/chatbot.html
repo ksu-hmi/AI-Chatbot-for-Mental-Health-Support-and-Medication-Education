@@ -1,53 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Mental Health Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        #chatbox {
+
+        #chat-container {
+            background-color: #ffffff;
             width: 400px;
-            height: 400px;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
             margin-bottom: 10px;
         }
-        #userInput {
-            width: 300px;
-        }
+
         .user {
             text-align: right;
-            color: blue;
+            color: #007bff;
+            font-weight: bold;
         }
+
         .bot {
             text-align: left;
-            color: green;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        #user-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #send-btn {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #send-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h2>Mental Health Support Chatbot</h2>
-    <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
+    <div id="chat-container">
+        <h2 style="text-align: center; color: #333;">Mental Health Chatbot</h2>
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button id="send-btn">Send</button>
+    </div>
 
     <script>
-        async function sendMessage() {
-            const message = document.getElementById("userInput").value;
-            const chatbox = document.getElementById("chatbox");
+        document.getElementById('send-btn').onclick = function() {
+            sendMessage();
+        };
 
-            chatbox.innerHTML += `<div class="user"><b>You:</b> ${message}</div>`;
+        document.getElementById('user-input').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
 
-            const response = await fetch("/get-response/?message=" + message);
-            const data = await response.text();
+        function sendMessage() {
+            let userInput = document.getElementById('user-input').value;
+            if (!userInput) return;
+            document.getElementById('messages').innerHTML += `<div class="message user">You: ${userInput}</div>`;
+            document.getElementById('user-input').value = '';
 
-            chatbox.innerHTML += `<div class="bot"><b>Bot:</b> ${data}</div>`;
-
-            document.getElementById("userInput").value = "";
-            chatbox.scrollTop = chatbox.scrollHeight;
+            fetch(`/get-response/?message=${encodeURIComponent(userInput)}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('messages').innerHTML += `<div class="message bot">Bot: ${data}</div>`;
+                    document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+                });
         }
     </script>
 </body>
