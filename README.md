@@ -40,6 +40,7 @@ Clone the repository:
 - [x] Add additional chatbot responses (bipolar disorder, medication side effects, coping tips).
 - [x] Improve chatbot front-end styling (better CSS, user instructions).
 - [ ] Track bugs and troubleshooting steps in a project wiki (optional).
+- [x] add medication to code 
 
 ---
 
