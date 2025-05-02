@@ -38,7 +38,7 @@ Clone the repository:
 - [x] Build simple NLP keyword response system (anxiety, PTSD, OCD, depression).
 - [x] Test chatbot server functionality locally (`python manage.py runserver`).
 - [x] Add additional chatbot responses (bipolar disorder, medication side effects, coping tips).
-- [ ] Improve chatbot front-end styling (better CSS, user instructions).
+- [x] Improve chatbot front-end styling (better CSS, user instructions).
 - [ ] Track bugs and troubleshooting steps in a project wiki (optional).
 
 ---
